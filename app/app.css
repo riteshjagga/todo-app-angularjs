@@ -1,0 +1,105 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.preloader {
+  margin-right: 5px;
+}
+
+.preloader.small {
+  width: 20px;
+  height: 20px;
+}
+
+.panel-heading + .panel-heading {
+  border-radius: 0;
+}
+
+.data-table > tbody > tr > th,
+.data-table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.data-table > tbody > tr.no-border > th,
+.data-table > tbody > tr.no-border > td {
+  border-top: 0;
+}
+
+.tag {
+  margin-right: 5px;
+}
+
+.no-data-message {
+  padding: 20px;
+  text-align: center;
+}
+.no-data-message-inline {
+  color: #888888;
+}
+
+.padding {
+  padding: 20px;
+}
+
+.tag {
+  cursor: pointer;
+  background-color: #f57f17;
+}
+
+.tag:last-child {
+  margin-right: 0;
+}
+
+.panel-active {}
+
+.panel-active > .panel-heading {
+  background-color: #3f51b5;
+  color: #fff;
+  border-color: #283593;
+}
+
+.panel-deleted > .panel-heading {
+  background-color: #f44336;
+  color: #fff;
+  border-color: #c62828;
+}
+
+.panel-title {
+  font-size: 24px;
+}
+/*
+.panel-active .table,
+.panel-active .table > thead > tr > th,
+.panel-active .table > tbody > tr > th,
+.panel-active .table > tbody > tr > td {
+  border-color: #283593;
+}
+
+.panel-deleted .table,
+.panel-deleted .table > thead > tr > th,
+.panel-deleted .table > tbody > tr > th,
+.panel-deleted .table > tbody > tr > td {
+  border-color: #c62828 !important;
+}*/
