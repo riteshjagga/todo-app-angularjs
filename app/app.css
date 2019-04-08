@@ -47,10 +47,6 @@
   border-top: 0;
 }
 
-.tag {
-  margin-right: 5px;
-}
-
 .no-data-message {
   padding: 20px;
   text-align: center;
@@ -63,14 +59,34 @@
   padding: 20px;
 }
 
-.tag {
-  cursor: pointer;
-  background-color: #f57f17;
+.tags .tags-icon {
+  color: #FFD600;
+  margin-right: 5px;
+  vertical-align: middle
 }
 
-.tag:last-child {
+.tags .tag {
+  cursor: pointer;
+  margin-right: 5px;
+
+  background-color: transparent;
+  border: 1px solid #FFD600;
+  /*border-color: #FFD600;*/
+  color: #333;
+}
+
+.tags .tag:last-child {
   margin-right: 0;
 }
+
+.tags .tag:hover {
+  background-color: #FFF9C4;
+}
+
+.tags .tag:active {
+  border-color: #F9A825;
+}
+
 
 .panel-active {}
 
@@ -89,6 +105,81 @@
 .panel-title {
   font-size: 24px;
 }
+
+.btn-primary {
+  background-color: #FFDE03;
+  border-color: #FFD600;
+  color: #333;
+}
+
+.btn-primary:hover {
+  background-color: #FFEA00;
+  border-color: #FFD600;
+  color: #333;
+}
+
+.open > .dropdown-toggle.btn-primary:focus,
+/*.open > .dropdown-toggle.btn-primary:active:focus,*/
+.btn.btn-primary:focus,
+.btn.btn-primary:active:focus,
+.btn.btn-primary:active:hover {
+  background-color: #F57F17;
+  border-color: #F9A825;
+  color: #333;
+}
+
+.btn.btn-primary:disabled {
+  background-color: #FFF9C4;
+  opacity: 0.75;
+  color: #666;
+}
+
+.btn.btn-default {
+  border-color: #FFD600;
+}
+
+.btn.btn-default:hover {
+  background-color: #FFF9C4;
+  border-color: #FFD600;
+}
+
+.btn.btn-default:active {
+  background-color: #F57F17;
+}
+
+.btn.btn-default:active:focus,
+.btn.btn-default:active:hover {
+  border-color: #F9A825;
+}
+
+
+.search-form .search-box {
+  /*background-color: #FFFF8D;
+  background-color: #FFFDE7;*/
+  background-color: #FFF9C4;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.search-form .clear-search-box,
+.search-form .clear-search-box:hover,
+.search-form .clear-search-box:focus,
+.search-form .clear-search-box:active:focus {
+  background-color: #FFF9C4;
+  border-color: transparent
+}
+
+.status-select-box {
+  border: 1px solid #FFD600;
+  background-color: transparent;
+  height: 30px;
+  border-radius: 3px;
+}
+
+.status-select-box:hover {
+  background-color: #FFF9C4;
+}
+
 /*
 .panel-active .table,
 .panel-active .table > thead > tr > th,

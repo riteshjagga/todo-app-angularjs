@@ -6,10 +6,10 @@
 
         <div class="row">
             <div class="col-xs-6">
-                <form nam="searchForm">
+                <form nam="searchForm" class="search-form">
                     <div class="input-group">
                         <div class="input-group-btn" uib-dropdown>
-                            <button type="button" class="btn btn-default dropdown-toggle"
+                            <button type="button" class="btn btn-primary dropdown-toggle"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     uib-dropdown-toggle>
                                 {{vm.selectedFilter.label}} <span class="caret"></span>
@@ -17,19 +17,19 @@
                             <ul class="dropdown-menu" uib-dropdown-menu>
                                 <li ng-repeat="filter in vm.filters">
                                     <a ui-sref="todos.list({filterBy: filter.key})">{{filter.label}}
-                                        <span class="glyphicon glyphicon-ok" ng-show="filter.key === vm.selectedFilter.key"></span>
+                                        <span class="pull-right glyphicon glyphicon-ok" ng-show="filter.key === vm.selectedFilter.key"></span>
                                     </a>
                                 </li>
                             </ul>
                         </div><!-- /btn-group -->
-                        <input type="text" class="form-control" placeholder="Search todo by title or associated tag using tag:"
+                        <input type="text" class="form-control search-box" placeholder="Search todo by title or associated tag using tag:"
                                 ng-model="vm.searchText">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" title="Clear search text"
+                            <button class="btn btn-primary clear-search-box" type="button" title="Clear search text"
                                     ng-click="vm.clearSearchText()">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                             </button>
-                            <button class="btn btn-default" type="submit" title="Search todos"
+                            <button class="btn btn-primary" type="submit" title="Search todos"
                                     ng-click="vm.getTodos()">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
@@ -48,12 +48,12 @@
                     {{vm.fromItems()}} - {{vm.toItems()}} of {{vm.totalTodos}}
 
                     <div class="btn-group" role="group" aria-label="Navigation buttons">
-                        <button type="button" class="btn btn-default" title="Previous Page"
+                        <button type="button" class="btn btn-primary" title="Previous Page"
                                 ng-click="vm.getPreviousPage()"
                                 ng-disabled="vm.firstPage()">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
-                        <button type="button" class="btn btn-default" title="Next Page"
+                        <button type="button" class="btn btn-primary" title="Next Page"
                                 ng-click="vm.getNextPage()"
                                 ng-disabled="vm.lastPage()">
                             <span class="glyphicon glyphicon-chevron-right"></span>
@@ -80,7 +80,8 @@
             <th class="text-center">{{vm.getTodoIndexForDisplay($index)}}</th>
             <td class="text-left">{{todo.title}}</td>
             <td class="text-left">
-                <select ng-model="todo.status"
+                <select class="status-select-box"
+                        ng-model="todo.status"
                         ng-options="status as status.label for status in vm.statuses() track by status.key"
                         ng-change="vm.updateTodoStatus(todo)"></select>
 
@@ -98,14 +99,15 @@
         <tr ng-repeat-end class="no-border">
             <th></th>
             <td colspan="2">
-                <span class="tags">
+                <div class="tags">
+                    <span class="tags-icon glyphicon glyphicon-tags"></span>
                     <span ng-if="todo.tags.length === 0" class="no-data-message-inline">No tags</span>
                     <span ng-if="todo.tags.length > 0">
                         <span class="tag label label-default"
                               ng-repeat="tag in todo.tags"
                               ng-click="vm.searchByTag(tag)">{{tag.name}}</span>
                     </span>
-                </span>
+                </div>
             </td>
             <td></td>
         </tr>
