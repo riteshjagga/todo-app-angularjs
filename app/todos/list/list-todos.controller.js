@@ -6,10 +6,12 @@ angular.module('todoApp.todos')
         '$state',
         '$http',
         'TodoStatus',
+        'ConfigService',
         function ($scope,
                   $state,
                   $http,
-                  TodoStatus) {
+                  TodoStatus,
+                  ConfigService) {
 
             var vm = this;
             vm.loading = true;
@@ -68,7 +70,8 @@ angular.module('todoApp.todos')
                 var errorMessage = '';
                 vm.loading = true;
 
-                var url = 'http://localhost:3000/todos';
+                console.log();
+                var url = ConfigService.getBaseUrl() + '/todos';
                 var queryParams = {
                     page: vm.page,
                     items_per_page: vm.itemsPerPage
@@ -85,7 +88,7 @@ angular.module('todoApp.todos')
                 var index = vm.searchText.search(/tag:/);
                 if(index > -1) {
                     var tagName = vm.searchText.substring((index + 4)).trim();
-                    url = 'http://localhost:3000/tags/' + tagName + '/todos';
+                    url = ConfigService.getBaseUrl() + '/tags/' + tagName + '/todos';
                 } else if(vm.searchText !== '') {
                     queryParams.title = vm.searchText;
                 }
@@ -178,7 +181,7 @@ angular.module('todoApp.todos')
                 var oldStatus = todo._status;
                 var newStatus = todo.status.key;
 
-                $http.patch('http://localhost:3000/todos/' + todoId + '/update_status', {
+                $http.patch(ConfigService.getBaseUrl() + '/todos/' + todoId + '/update_status', {
                     'status': newStatus
                 })
                     .then(function (response) {
@@ -197,7 +200,7 @@ angular.module('todoApp.todos')
                 var todoId = todo._id.$oid;
 
                 if(vm.selectedFilter.key === 'active') {
-                    $http.delete('http://localhost:3000/todos/' + todoId)
+                    $http.delete(ConfigService.getBaseUrl() + '/todos/' + todoId)
                         .then(function (response) {
                             console.log('Deleted');
                             getTodos();
@@ -206,7 +209,7 @@ angular.module('todoApp.todos')
                             console.log('Error deleting todo');
                         });
                 } else {
-                    $http.patch('http://localhost:3000/todos/' + todoId + '/undo_delete')
+                    $http.patch(ConfigService.getBaseUrl() + '/todos/' + todoId + '/undo_delete')
                         .then(function (response) {
                             console.log('Undo Delete');
                             getTodos();
