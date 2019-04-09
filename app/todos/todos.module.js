@@ -18,6 +18,13 @@ angular
                 controllerAs: 'vm',
                 params: { filterBy: 'active'}
             })
+            .state({
+                name: 'todos.upsert',
+                url: '/upsert',
+                templateUrl: 'todos/upsert/upsert-todo.html',
+                controller: 'UpsertTodoController',
+                controllerAs: 'vm'
+            })
         /*$stateProvider
             .when('/todos-list', {
                 templateUrl: 'todos/list/list-todos.html',

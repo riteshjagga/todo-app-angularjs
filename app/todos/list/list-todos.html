@@ -1,6 +1,11 @@
 <div class="panel panel-default" ng-class="vm.selectedFilter.key === 'active' ? 'panel-active' : 'panel-deleted'">
     <div class="panel-heading">
-        <h3 class="panel-title">Todos</h3>
+        <h3 class="panel-title">
+            Todos
+            <button class="pull-right btn btn-primary" type="button" title="Add todo"
+                    ng-if="vm.selectedFilter.key === 'active'"
+                    ng-click="vm.addTodo()">Add</button>
+        </h3>
     </div>
     <div class="panel-heading">
 
