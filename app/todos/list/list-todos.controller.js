@@ -219,7 +219,7 @@ angular.module('todoApp.todos')
             }
 
             function gotoAddTodo() {
-                $state.go('todos.upsert');
+                $state.go('main.todos.upsert');
             }
 
         }]);

@@ -99,7 +99,7 @@ angular.module('todoApp.todos')
                 request.then(function (response) {
                     console.log('Todo created');
                     vm.loading = false;
-                    $state.go('todos.list');
+                    $state.go('main.todos.list');
                 })
                     .catch(function (error) {
                         console.log('Error creating todo');

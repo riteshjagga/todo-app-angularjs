@@ -3,7 +3,7 @@
         <h3 class="panel-title">
             Todos
             <a class="pull-right btn btn-primary" role="button" title="Add todo"
-               ui-sref="todos.upsert({id: null})"
+               ui-sref="main.todos.upsert({id: null})"
                ng-if="vm.selectedFilter.key === 'active'">Add</a>
             <!--<button class="pull-right btn btn-primary" type="button" title="Add todo"
                     ng-if="vm.selectedFilter.key === 'active'"
@@ -24,7 +24,7 @@
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu>
                                 <li ng-repeat="filter in vm.filters">
-                                    <a ui-sref="todos.list({filterBy: filter.key})">{{filter.label}}
+                                    <a ui-sref="main.todos.list({filterBy: filter.key})">{{filter.label}}
                                         <span class="pull-right glyphicon glyphicon-ok" ng-show="filter.key === vm.selectedFilter.key"></span>
                                     </a>
                                 </li>
@@ -95,7 +95,7 @@
 
             </td>
             <td class="text-center">
-                <a class="btn btn-default btn-sm" role="button" title="Edit Todo" ui-sref="todos.upsert({id: todo._id.$oid})">
+                <a class="btn btn-default btn-sm" role="button" title="Edit Todo" ui-sref="main.todos.upsert({id: todo._id.$oid})">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
                 <button type="button" class="btn btn-default btn-sm" ng-attr-title="{{(vm.selectedFilter.key === 'active') ? 'Delete Todo' : 'Restore Todo'}}"
