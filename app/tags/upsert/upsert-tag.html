@@ -1,0 +1,37 @@
+<div class="panel panel-default panel-active">
+    <div class="panel-heading">
+        <h3 class="panel-title"><a class="btn btn-link" role="button" title="Go Back" ui-sref="main.tags.list">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a> {{vm.isNew ? 'Add' : 'Edit'}} Tag</h3>
+    </div>
+
+    <form name="upsertTagForm" class="form-horizontal" novalidate ng-submit="vm.upsertTag()">
+        <div class="panel-body">
+            <div class="form-group"
+                 ng-class="{ 'has-error' : upsertTagForm.name.$invalid && !upsertTagForm.name.$pristine }">
+                <label for="name" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" id="name" name="name" class="form-control"
+                           ng-model="vm.tag.name" required minlength="3" maxlength="25">
+                    <div class="help-block">Minimum 3 and maximum 25 characters</div>
+                    <div class="help-block" ng-messages="upsertTagForm.name.$error"
+                         ng-if="upsertTagForm.name.$touched">
+                        <p ng-message="required">Name is required.</p>
+                        <p ng-message="minlength">Name is too short.</p>
+                        <p ng-message="maxlength">Name is too long.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success" ng-disabled="upsertTagForm.$invalid || vm.loading">
+                        Submit
+                    </button>
+                    <img class="preloader small" src="./images/throbber.gif" alt="preloader" ng-show="vm.loading"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
