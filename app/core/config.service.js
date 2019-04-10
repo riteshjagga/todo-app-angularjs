@@ -10,7 +10,7 @@ angular.module('todoApp.core')
               if($window.location.href.search(/localhost/) > -1) {
                   return 'http://localhost:3000'
               } else {
-                  return 'https://rj-todo-app-herokuapp.com';
+                  return 'https://rj-todo-app.herokuapp.com';
               }
             }
 
