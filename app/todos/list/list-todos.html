@@ -2,9 +2,12 @@
     <div class="panel-heading">
         <h3 class="panel-title">
             Todos
-            <button class="pull-right btn btn-primary" type="button" title="Add todo"
+            <a class="pull-right btn btn-primary" role="button" title="Add todo"
+               ui-sref="todos.upsert({id: null})"
+               ng-if="vm.selectedFilter.key === 'active'">Add</a>
+            <!--<button class="pull-right btn btn-primary" type="button" title="Add todo"
                     ng-if="vm.selectedFilter.key === 'active'"
-                    ng-click="vm.addTodo()">Add</button>
+                    ng-click="vm.gotoAddTodo()">Add</button>-->
         </h3>
     </div>
     <div class="panel-heading">
@@ -92,7 +95,7 @@
 
             </td>
             <td class="text-center">
-                <a class="btn btn-default btn-sm" href="#" role="button" title="Edit Todo">
+                <a class="btn btn-default btn-sm" role="button" title="Edit Todo" ui-sref="todos.upsert({id: todo._id.$oid})">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
                 <button type="button" class="btn btn-default btn-sm" ng-attr-title="{{(vm.selectedFilter.key === 'active') ? 'Delete Todo' : 'Restore Todo'}}"
