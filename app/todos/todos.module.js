@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('todoApp.todos', ['ngRoute'])
+    .module('todoApp.todos', [])
     .config(['$stateProvider', function($stateProvider) {
         $stateProvider
             .state({
@@ -20,18 +20,9 @@ angular
             })
             .state({
                 name: 'todos.upsert',
-                url: '/upsert',
+                url: '/upsert/:id',
                 templateUrl: 'todos/upsert/upsert-todo.html',
                 controller: 'UpsertTodoController',
                 controllerAs: 'vm'
-            })
-        /*$stateProvider
-            .when('/todos-list', {
-                templateUrl: 'todos/list/list-todos.html',
-                controller: 'ListTodosController'
-            })*/
-            /*.when('/todos/list', {
-                templateUrl: 'todos/list/list-todos.html',
-                controller: 'ListTodosController'
-            })*/;
+            });
     }]);

@@ -47,6 +47,7 @@ angular.module('todoApp.todos')
             vm.statuses = statuses;
             vm.updateTodoStatus = updateTodoStatus;
             vm.deleteRestoreTodo = deleteRestoreTodo;
+            vm.gotoAddTodo = gotoAddTodo;
 
             init();
 
@@ -215,6 +216,10 @@ angular.module('todoApp.todos')
                             console.log('Error restoring todo');
                         });
                 }
+            }
+
+            function gotoAddTodo() {
+                $state.go('todos.upsert');
             }
 
         }]);

@@ -109,7 +109,7 @@
 .btn-primary {
   background-color: #FFDE03;
   border-color: #FFD600;
-  color: #333;
+  color: #333 !important;
 }
 
 .btn-primary:hover {
@@ -180,6 +180,9 @@
   background-color: #FFF9C4;
 }
 
+.panel-footer .form-group {
+  margin-bottom: 0;
+}
 /*
 .panel-active .table,
 .panel-active .table > thead > tr > th,
