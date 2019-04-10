@@ -7,11 +7,13 @@ angular.module('todoApp.tags')
         '$stateParams',
         '$http',
         '$q',
+        'ConfigService',
         function ($scope,
                   $state,
                   $stateParams,
                   $http,
-                  $q) {
+                  $q,
+                  ConfigService) {
 
             var vm = this;
             vm.tagLoading = true;
