@@ -41,24 +41,13 @@ angular.module('todoApp.tags')
                 var defer = $q.defer();
 
                 if (vm.isNew) {
-                    defer.resolve({data: {title: '', tag_ids: []}});
+                    defer.resolve({data: {name: ''}});
                 } else {
-                    return $http.get('http://localhost:3000/tags/' + $stateParams.id);
+                    return $http.get(ConfigService.getBaseUrl() + '/tags/' + $stateParams.id);
                 }
 
                 return defer.promise;
             }
-
-            /*function mapTags(tags) {
-                return tags.map(function (tag) {
-                    var index = vm.todo.tag_ids.findIndex(function (tagId) {
-                        return tagId.$oid === tag._id.$oid;
-                    });
-
-                    tag.selected = (index >= 0);
-                    return tag;
-                });
-            }*/
 
             function upsertTag() {
                 vm.loading = true;
@@ -72,9 +61,9 @@ angular.module('todoApp.tags')
                 var request = null;
 
                 if (vm.isNew) {
-                    request = $http.post('http://localhost:3000/tags', data);
+                    request = $http.post(ConfigService.getBaseUrl() + '/tags', data);
                 } else {
-                    request = $http.put('http://localhost:3000/tags/' + $stateParams.id, data);
+                    request = $http.put(ConfigService.getBaseUrl() + '/tags/' + $stateParams.id, data);
                 }
 
                 request

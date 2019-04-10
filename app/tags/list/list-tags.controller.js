@@ -4,8 +4,10 @@ angular.module('todoApp.tags')
     .controller('ListTagsController', [
         '$scope',
         '$http',
+        'ConfigService',
         function ($scope,
-                  $http) {
+                  $http,
+                  ConfigService) {
 
 
             var vm = this;
@@ -45,7 +47,7 @@ angular.module('todoApp.tags')
                 var errorMessage = '';
                 vm.loading = true;
 
-                var url = 'http://localhost:3000/tags';
+                var url = ConfigService.getBaseUrl() + '/tags';
                 var queryParams = {
                     page: vm.page,
                     items_per_page: vm.itemsPerPage

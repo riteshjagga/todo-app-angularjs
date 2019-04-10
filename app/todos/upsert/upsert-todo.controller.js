@@ -43,7 +43,7 @@ angular.module('todoApp.todos')
             }
 
             function getTags() {
-                return $http.get('http://localhost:3000/tags')
+                return $http.get(ConfigService.getBaseUrl() + '/tags')
             }
 
             function getTodo() {
@@ -52,7 +52,7 @@ angular.module('todoApp.todos')
                 if (vm.isNew) {
                     defer.resolve({data: {title: '', tag_ids: []}});
                 } else {
-                    return $http.get('http://localhost:3000/todos/' + $stateParams.id);
+                    return $http.get(ConfigService.getBaseUrl() + '/todos/' + $stateParams.id);
                 }
 
                 return defer.promise;
@@ -91,9 +91,9 @@ angular.module('todoApp.todos')
                 var request = null;
 
                 if (vm.isNew) {
-                    request = $http.post('http://localhost:3000/todos', data);
+                    request = $http.post(ConfigService.getBaseUrl() + '/todos', data);
                 } else {
-                    request = $http.put('http://localhost:3000/todos/' + $stateParams.id, data);
+                    request = $http.put(ConfigService.getBaseUrl() + '/todos/' + $stateParams.id, data);
                 }
 
                 request.then(function (response) {
