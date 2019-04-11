@@ -5,16 +5,18 @@ angular.module('todoApp.todos')
         '$scope',
         '$state',
         '$http',
+        'toastr',
         'TodoStatus',
         'ConfigService',
         function ($scope,
                   $state,
                   $http,
+                  toastr,
                   TodoStatus,
                   ConfigService) {
 
             var vm = this;
-            vm.loading = true;
+            vm.loading = false;
 
             vm.filters = [
                 {key: 'active', label: 'Active'},
@@ -71,7 +73,6 @@ angular.module('todoApp.todos')
                 var errorMessage = '';
                 vm.loading = true;
 
-                console.log();
                 var url = ConfigService.getBaseUrl() + '/todos';
                 var queryParams = {
                     page: vm.page,
@@ -111,6 +112,7 @@ angular.module('todoApp.todos')
 
             function mapTodos(todos) {
                 return todos.map(function (todo) {
+                    todo.actionLoading = false;
                     if (todo._status === TodoStatus.NOT_STARTED.key) {
                         todo.status = TodoStatus.NOT_STARTED;
                     } else if (todo._status === TodoStatus.STARTED.key) {
@@ -178,6 +180,7 @@ angular.module('todoApp.todos')
             }
 
             function updateTodoStatus(todo) {
+                todo.actionLoading = true;
                 var todoId = todo._id.$oid;
                 var oldStatus = todo._status;
                 var newStatus = todo.status.key;
@@ -186,37 +189,44 @@ angular.module('todoApp.todos')
                     'status': newStatus
                 })
                     .then(function (response) {
+                        todo.actionLoading = false;
                         todo._status = newStatus;
-                        console.log('Todo status updated');
+                        toastr.success('Todo status updated');
                     })
                     .catch(function (error) {
-                        console.log('Error updating todo status');
-
+                        todo.actionLoading = false;
                         // Reset to old selected status object
                         todo.status = TodoStatus.findByKey(oldStatus);
+
+                        toastr.error('Error updating todo status');
                     });
             }
 
             function deleteRestoreTodo(todo) {
+                todo.actionLoading = true;
                 var todoId = todo._id.$oid;
 
                 if(vm.selectedFilter.key === 'active') {
                     $http.delete(ConfigService.getBaseUrl() + '/todos/' + todoId)
                         .then(function (response) {
-                            console.log('Deleted');
+                            todo.actionLoading = false;
+                            toastr.success('Todo deleted');
                             getTodos();
                         })
                         .catch(function (error) {
-                            console.log('Error deleting todo');
+                            todo.actionLoading = false;
+                            toastr.error('Error deleting todo');
                         });
                 } else {
                     $http.patch(ConfigService.getBaseUrl() + '/todos/' + todoId + '/undo_delete')
                         .then(function (response) {
-                            console.log('Undo Delete');
+                            todo.actionLoading = false;
+                            toastr.success('Todo restored');
                             getTodos();
                         })
                         .catch(function (error) {
-                            console.log('Error restoring todo');
+                            todo.actionLoading = false;
+                            toastr.error('Error restoring todo');
                         });
                 }
             }

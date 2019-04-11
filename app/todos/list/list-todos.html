@@ -5,9 +5,6 @@
             <a class="pull-right btn btn-primary" role="button" title="Add Todo"
                ui-sref="main.todos.upsert({id: null})"
                ng-if="vm.selectedFilter.key === 'active'">Add Todo</a>
-            <!--<button class="pull-right btn btn-primary" type="button" title="Add todo"
-                    ng-if="vm.selectedFilter.key === 'active'"
-                    ng-click="vm.gotoAddTodo()">Add</button>-->
         </h3>
     </div>
     <div class="panel-heading">
@@ -34,7 +31,8 @@
                                 ng-model="vm.searchText">
                         <span class="input-group-btn">
                             <button class="btn btn-primary clear-search-box" type="button" title="Clear search text"
-                                    ng-click="vm.clearSearchText()">
+                                    ng-click="vm.clearSearchText()"
+                                    ng-show="vm.searchText !== ''">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                             </button>
                             <button class="btn btn-primary" type="submit" title="Search todos"
@@ -43,16 +41,13 @@
                             </button>
                         </span>
                     </div><!-- /input-group -->
-
                 </form>
-
             </div><!-- /.col-sm-6 -->
             <div class="col-xs-6">
 
                 <div class="pull-right">
+                    <preloader size="small" ng-show="vm.loading"></preloader>
 
-                    <img class="preloader small" src="./images/throbber.gif" alt="preloader"
-                         ng-show="vm.loading"/>
                     {{vm.fromItems()}} - {{vm.toItems()}} of {{vm.totalTodos}}
 
                     <div class="btn-group" role="group" aria-label="Navigation buttons">
@@ -84,22 +79,23 @@
         </thead>
         <tbody>
         <tr ng-repeat-start="todo in vm.todos">
-            <!--<th>{{($index + 1) * (vm.page)}}</th>-->
             <th class="text-center">{{vm.getTodoIndexForDisplay($index)}}</th>
             <td class="text-left">{{todo.title}}</td>
             <td class="text-left">
                 <select class="status-select-box"
                         ng-model="todo.status"
                         ng-options="status as status.label for status in vm.statuses() track by status.key"
-                        ng-change="vm.updateTodoStatus(todo)"></select>
-
+                        ng-change="vm.updateTodoStatus(todo)"
+                        ng-disabled="todo.actionLoading"></select>
             </td>
             <td class="text-center">
                 <a class="btn btn-default btn-sm" role="button" title="Edit Todo" ui-sref="main.todos.upsert({id: todo._id.$oid})">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <button type="button" class="btn btn-default btn-sm" ng-attr-title="{{(vm.selectedFilter.key === 'active') ? 'Delete Todo' : 'Restore Todo'}}"
-                        ng-click="vm.deleteRestoreTodo(todo)">
+                <button type="button" class="btn btn-default btn-sm"
+                        ng-attr-title="{{(vm.selectedFilter.key === 'active') ? 'Delete Todo' : 'Restore Todo'}}"
+                        ng-click="vm.deleteRestoreTodo(todo)"
+                        ng-disabled="todo.actionLoading">
                     <span class="glyphicon" ng-class="(vm.selectedFilter.key === 'active') ? 'glyphicon-trash' : 'glyphicon-repeat'"></span>
                 </button>
             </td>

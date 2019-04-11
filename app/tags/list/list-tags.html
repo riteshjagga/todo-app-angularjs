@@ -16,7 +16,8 @@
                                ng-model="vm.searchText">
                         <span class="input-group-btn">
                             <button class="btn btn-primary clear-search-box" type="button" title="Clear search text"
-                                    ng-click="vm.clearSearchText()">
+                                    ng-click="vm.clearSearchText()"
+                                    ng-show="vm.searchText !== ''">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                             </button>
                             <button class="btn btn-primary" type="submit" title="Search tags"
@@ -32,8 +33,7 @@
 
                 <div class="pull-right">
 
-                    <img class="preloader small" src="./images/throbber.gif" alt="preloader"
-                         ng-show="vm.loading"/>
+                    <preloader size="small" ng-show="vm.loading"></preloader>
                     {{vm.fromItems()}} - {{vm.toItems()}} of {{vm.totalTags}}
 
                     <div class="btn-group" role="group" aria-label="Navigation buttons">

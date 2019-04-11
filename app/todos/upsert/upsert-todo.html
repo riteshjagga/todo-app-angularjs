@@ -6,8 +6,8 @@
     </div>
 
     <form name="upsertTodoForm" class="form-horizontal" novalidate ng-submit="vm.upsertTodo()">
-        <div class="panel-body text-center" ng-show="vm.tagsLoading">
-            <img class="preloader small" src="./images/throbber.gif" alt="preloader"/>
+        <div class="panel-body no-content layout-padding layout-row layout-align-center-center" ng-show="vm.tagsLoading">
+            <preloader size="small"></preloader>
         </div>
         <div class="panel-body" ng-show="!vm.tagsLoading">
             <div class="form-group"
@@ -51,7 +51,7 @@
                     <button type="submit" class="btn btn-success" ng-disabled="upsertTodoForm.$invalid || vm.loading">
                         Submit
                     </button>
-                    <img class="preloader small" src="./images/throbber.gif" alt="preloader" ng-show="vm.loading"/>
+                    <preloader size="small" ng-show="vm.loading"></preloader>
                 </div>
             </div>
         </div>

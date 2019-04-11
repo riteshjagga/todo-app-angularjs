@@ -2,9 +2,11 @@
 
 // Declare app level module which depends on views, and core components
 angular.module('todoApp', [
+    'ngAnimate',
     'ngMessages',
     'ui.router',
     'ui.bootstrap',
+    'toastr',
     'todoApp.main',
     'todoApp.core',
     'todoApp.todos',
@@ -14,9 +16,15 @@ angular.module('todoApp', [
     .config([
         '$locationProvider',
         '$urlRouterProvider',
+        'toastrConfig',
         function ($locationProvider,
-                  $urlRouterProvider) {
+                  $urlRouterProvider,
+                  toastrConfig) {
 
             $locationProvider.hashPrefix('!');
             $urlRouterProvider.otherwise('/todos/list');
+
+            angular.extend(toastrConfig, {
+                positionClass: 'toast-bottom-left'
+            });
         }]);
