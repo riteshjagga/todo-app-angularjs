@@ -11,6 +11,7 @@ angular.module('todoApp.tags')
 
 
             var vm = this;
+            vm.errorMessage = '';
             vm.loading = true;
             vm.searchText = '';
 
@@ -34,6 +35,7 @@ angular.module('todoApp.tags')
             vm.getNextPage = getNextPage;
             vm.getPreviousPage = getPreviousPage;
             vm.getTags = getTags;
+            vm.searchTags = searchTags;
             vm.clearSearchText = clearSearchText;
             vm.gotoAddTag = gotoAddTag;
 
@@ -44,7 +46,7 @@ angular.module('todoApp.tags')
             }
 
             function getTags() {
-                var errorMessage = '';
+                vm.errorMessage = '';
                 vm.loading = true;
 
                 var url = ConfigService.getBaseUrl() + '/tags';
@@ -67,7 +69,7 @@ angular.module('todoApp.tags')
                         vm.loading = false;
                     })
                     .catch(function (error) {
-                        errorMessage = error;
+                        vm.errorMessage = error;
                         vm.loading = false;
                     });
             }
@@ -81,6 +83,12 @@ angular.module('todoApp.tags')
 
             function clearSearchText() {
                 vm.searchText = '';
+                vm.page = 1;
+                getTags();
+            }
+
+            function searchTags() {
+                vm.page = 1;
                 getTags();
             }
 
