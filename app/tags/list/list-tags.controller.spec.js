@@ -78,7 +78,6 @@ describe('Testing ListTagsController', function () {
             httpBackend.expectGET(/.*?\/tags?.*/g).respond(200, { count: totalTags, tags: tags });
             httpBackend.flush();
 
-
             expect(controller.tags[0].totalTodos).toBe(2);
             expect(controller.tags[1].totalTodos).toBe(2);
             expect(controller.tags[2].totalTodos).toBe(2);
@@ -168,6 +167,8 @@ describe('Testing ListTagsController', function () {
             expect(controller.page).toBe(2);
             expect(controller.fromItems()).toBe(11);
             expect(controller.toItems()).toBe(20);
+            expect(controller.firstPage()).toBeFalsy();
+            expect(controller.lastPage()).toBeFalsy();
             expect(controller.loading).toBeFalsy();
         });
 
@@ -276,7 +277,6 @@ describe('Testing ListTagsController', function () {
             controller.page = 2;
             controller.totalPages = 3;
             httpBackend.expectGET(/.*?\/tags?.*/g).respond(200, { count: totalSearchedTags, tags: searchedTags });
-
 
             controller.searchText = 'Some different search text';
             controller.searchTags();
