@@ -36,7 +36,7 @@
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                             </button>
                             <button class="btn btn-primary" type="submit" title="Search todos"
-                                    ng-click="vm.getTodos()">
+                                    ng-click="vm.searchTodos()">
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </span>
@@ -79,7 +79,7 @@
         </thead>
         <tbody>
         <tr ng-repeat-start="todo in vm.todos">
-            <th class="text-center">{{vm.getTodoIndexForDisplay($index)}}</th>
+            <th class="text-center">{{vm.getIndexForDisplay($index)}}</th>
             <td class="text-left">{{todo.title}}</td>
             <td class="text-left">
                 <select class="status-select-box"

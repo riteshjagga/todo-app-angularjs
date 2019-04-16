@@ -69,12 +69,10 @@ angular.module('todoApp.tags')
 
                 request
                     .then(function (response) {
-                        console.log('Tag created/updated');
                         vm.inActionLoading = false;
                         $state.go('main.tags.list');
                     })
                     .catch(function (error) {
-                        console.log('Error creating tag');
                         vm.inActionLoading = false;
                     });
             }
