@@ -16,8 +16,8 @@ angular.module('todoApp.tags')
                   ConfigService) {
 
             var vm = this;
-            vm.tagLoading = true;
-            vm.loading = false;
+            vm.loading = true;
+            vm.inActionLoading = false;
             vm.isNew = ($stateParams.id === '');
             vm.tag = null;
 
@@ -26,16 +26,15 @@ angular.module('todoApp.tags')
             init();
 
             function init() {
-                vm.tagLoading = true;
+                vm.loading = true;
                 getTag()
                     .then(function (response) {
                         vm.tag = response.data;
-                        console.log(vm.tag);
-                        vm.tagLoading = false;
+                        vm.loading = false;
                     })
                     .catch(function (error) {
                         console.log('Error loading tag');
-                        vm.tagLoading = false;
+                        vm.loading = false;
                     });
             }
 
@@ -52,7 +51,7 @@ angular.module('todoApp.tags')
             }
 
             function upsertTag() {
-                vm.loading = true;
+                vm.inActionLoading = true;
 
                 var data = {
                     tag: {
@@ -70,13 +69,13 @@ angular.module('todoApp.tags')
 
                 request
                     .then(function (response) {
-                        console.log('Tag created');
-                        vm.loading = false;
+                        console.log('Tag created/updated');
+                        vm.inActionLoading = false;
                         $state.go('main.tags.list');
                     })
                     .catch(function (error) {
                         console.log('Error creating tag');
-                        vm.loading = false;
+                        vm.inActionLoading = false;
                     });
             }
 

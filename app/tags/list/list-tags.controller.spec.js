@@ -178,7 +178,6 @@ describe('Testing ListTagsController', function () {
             controller.totalPages = 4;
 
             httpBackend.expectGET(/.*?\/tags?.*/g).respond(200, { count: totalTags, tags: tags });
-
             controller.getPreviousPage();
             expect(controller.loading).toBeTruthy();
             httpBackend.flush();
