@@ -16,13 +16,13 @@ angular.module('todoApp.todos')
                   ConfigService) {
 
             var vm = this;
-            vm.tagsLoading = true;
-            vm.loading = false;
+            vm.errorMessage = '';
+            vm.loading = true;
+            vm.inActionLoading = false;
             vm.checkboxesTouched = false;
             vm.isNew = ($stateParams.id === '');
             vm.todo = null;
             vm.tags = [];
-
 
             vm.someTagsSelected = someTagsSelected;
             vm.upsertTodo = upsertTodo;
@@ -30,17 +30,16 @@ angular.module('todoApp.todos')
             init();
 
             function init() {
-                vm.tagsLoading = true;
+                vm.loading = true;
                 $q.all([getTodo(), getTags()])
                     .then(function (responses) {
                         vm.todo = responses[0].data;
                         vm.tags = mapTags(responses[1].data.tags);
-                        console.log(vm.todo);
-                        vm.tagsLoading = false;
+                        vm.loading = false;
                     })
                     .catch(function (error) {
                         console.log('Error loading tags/todo');
-                        vm.tagsLoading = false;
+                        vm.loading = false;
                     });
             }
 
@@ -72,8 +71,8 @@ angular.module('todoApp.todos')
             }
 
             function upsertTodo() {
-                console.log('someTagsSelected: ' + someTagsSelected());
-                vm.loading = true;
+                vm.errorMessage = '';
+                vm.inActionLoading = true;
 
                 var selectedTags = vm.tags.filter(function (tag) {
                     return tag.selected;
@@ -99,13 +98,12 @@ angular.module('todoApp.todos')
                 }
 
                 request.then(function (response) {
-                    console.log('Todo created');
-                    vm.loading = false;
+                    vm.inActionLoading = false;
                     $state.go('main.todos.list');
                 })
                     .catch(function (error) {
-                        console.log('Error creating todo');
-                        vm.loading = false;
+                        vm.errorMessage = error;
+                        vm.inActionLoading = false;
                     });
             }
 

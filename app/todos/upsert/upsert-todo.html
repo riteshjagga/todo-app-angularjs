@@ -6,10 +6,10 @@
     </div>
 
     <form name="upsertTodoForm" class="form-horizontal" novalidate ng-submit="vm.upsertTodo()">
-        <div class="panel-body no-content layout-padding layout-row layout-align-center-center" ng-show="vm.tagsLoading">
+        <div class="panel-body no-content layout-padding layout-row layout-align-center-center" ng-show="vm.loading">
             <preloader size="small"></preloader>
         </div>
-        <div class="panel-body" ng-show="!vm.tagsLoading">
+        <div class="panel-body" ng-show="!vm.loading">
             <div class="form-group"
                  ng-class="{ 'has-error' : upsertTodoForm.title.$invalid && !upsertTodoForm.title.$pristine }">
                 <label for="title" class="col-sm-2 control-label">Title</label>
@@ -45,13 +45,13 @@
                 </div>
             </div>
         </div>
-        <div class="panel-footer" ng-show="!vm.tagsLoading">
+        <div class="panel-footer" ng-show="!vm.loading">
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success" ng-disabled="upsertTodoForm.$invalid || vm.loading">
+                    <button type="submit" class="btn btn-success" ng-disabled="upsertTodoForm.$invalid || vm.inActionLoading">
                         Submit
                     </button>
-                    <preloader size="small" ng-show="vm.loading"></preloader>
+                    <preloader size="small" ng-show="vm.inActionLoading"></preloader>
                 </div>
             </div>
         </div>
