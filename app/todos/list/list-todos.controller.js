@@ -4,25 +4,27 @@ angular.module('todoApp.todos')
     .controller('ListTodosController', [
         '$scope',
         '$state',
+        '$stateParams',
         '$http',
         'toastr',
         'TodoStatus',
+        'TodoFilter',
         'ConfigService',
         function ($scope,
                   $state,
+                  $stateParams,
                   $http,
                   toastr,
                   TodoStatus,
+                  TodoFilter,
                   ConfigService) {
 
             var vm = this;
+            vm.errorMessage = '';
             vm.loading = false;
 
-            vm.filters = [
-                {key: 'active', label: 'Active'},
-                {key: 'deleted', label: 'Deleted'}
-             ];
-            vm.selectedFilter = vm.filters[0];
+            vm.filters = TodoFilter.toArray();
+            vm.selectedFilter = null;
 
             vm.searchText = '';
 
@@ -42,10 +44,11 @@ angular.module('todoApp.todos')
             vm.lastPage = lastPage;
             vm.fromItems = fromItems;
             vm.toItems = toItems;
-            vm.getTodoIndexForDisplay = getTodoIndexForDisplay;
+            vm.getIndexForDisplay = getIndexForDisplay;
             vm.getNextPage = getNextPage;
             vm.getPreviousPage = getPreviousPage;
             vm.getTodos = getTodos;
+            vm.searchTodos = searchTodos;
             vm.clearSearchText = clearSearchText;
             vm.searchByTag = searchByTag;
             vm.statuses = statuses;
@@ -61,7 +64,7 @@ angular.module('todoApp.todos')
             }
 
             function setFilter() {
-                vm.selectedFilter = ($state.params.filterBy === 'active') ? vm.filters[0] : vm.filters[1];
+                vm.selectedFilter = ($stateParams.filterBy === TodoFilter.DELETED.key) ? vm.filters[1] : vm.filters[0];
             }
 
             function searchByTag(tag) {
@@ -70,7 +73,7 @@ angular.module('todoApp.todos')
             }
 
             function getTodos() {
-                var errorMessage = '';
+                vm.errorMessage = '';
                 vm.loading = true;
 
                 var url = ConfigService.getBaseUrl() + '/todos';
@@ -79,7 +82,7 @@ angular.module('todoApp.todos')
                     items_per_page: vm.itemsPerPage
                 };
 
-                if(vm.selectedFilter.key === 'deleted') {
+                if(vm.selectedFilter.key === TodoFilter.DELETED.key) {
                     queryParams.deleted = true;
                 }
 
@@ -105,7 +108,7 @@ angular.module('todoApp.todos')
                         vm.loading = false;
                     })
                     .catch(function (error) {
-                        errorMessage = error;
+                        vm.errorMessage = error;
                         vm.loading = false;
                     });
             }
@@ -125,8 +128,14 @@ angular.module('todoApp.todos')
                 });
             }
 
+            function searchTodos() {
+                vm.page = 1;
+                getTodos();
+            }
+
             function clearSearchText() {
                 vm.searchText = '';
+                vm.page = 1;
                 getTodos();
             }
 
@@ -163,7 +172,7 @@ angular.module('todoApp.todos')
                 return to;
             }
 
-            function getTodoIndexForDisplay(index) {
+            function getIndexForDisplay(index) {
                 return ((vm.page - 1) * vm.itemsPerPage) + index + 1;
             }
 
@@ -180,6 +189,7 @@ angular.module('todoApp.todos')
             }
 
             function updateTodoStatus(todo) {
+                vm.errorMessage = '';
                 todo.actionLoading = true;
                 var todoId = todo._id.$oid;
                 var oldStatus = todo._status;
@@ -197,16 +207,17 @@ angular.module('todoApp.todos')
                         todo.actionLoading = false;
                         // Reset to old selected status object
                         todo.status = TodoStatus.findByKey(oldStatus);
-
+                        vm.errorMessage = error;
                         toastr.error('Error updating todo status');
                     });
             }
 
             function deleteRestoreTodo(todo) {
+                vm.errorMessage = '';
                 todo.actionLoading = true;
                 var todoId = todo._id.$oid;
 
-                if(vm.selectedFilter.key === 'active') {
+                if(vm.selectedFilter.key === TodoFilter.ACTIVE.key) {
                     $http.delete(ConfigService.getBaseUrl() + '/todos/' + todoId)
                         .then(function (response) {
                             todo.actionLoading = false;
@@ -215,6 +226,7 @@ angular.module('todoApp.todos')
                         })
                         .catch(function (error) {
                             todo.actionLoading = false;
+                            vm.errorMessage = error;
                             toastr.error('Error deleting todo');
                         });
                 } else {
@@ -226,6 +238,7 @@ angular.module('todoApp.todos')
                         })
                         .catch(function (error) {
                             todo.actionLoading = false;
+                            vm.errorMessage = error;
                             toastr.error('Error restoring todo');
                         });
                 }
